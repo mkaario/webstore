@@ -1,0 +1,31 @@
+header {
+  background: var(--whee-primary);
+  border-bottom: 1px solid var(--whee-shade);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  left: 0px;
+  padding: 1em 1em 0 1em;
+  position: sticky;
+  top: 0px;
+  width: 100%;
+  z-index: 10000;
+  .position_wrapper {
+    display: flex;
+
+    .logo {
+      max-width: 48px;
+      align-items: center;
+      display: flex;
+      img {
+        width: 100%;
+      }
+      .name {
+        color: var(--whee-secondary);
+        font-size: 0.8em;
+        padding-left: 0.5em;
+      }
+    }
+  }
+}

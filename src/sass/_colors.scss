@@ -1,0 +1,18 @@
+:root {
+  --whee-text: #333333;
+  --whee-primary: #ffffff;
+  --whee-secondary: #c72323;
+  --whee-tertiary: #cfc9c9;
+  // --whee-highlight: linear-gradient(to bottom, #f85032, #e73827);
+  // --whee-highlight-flat: #f85032;
+  --whee-highlight-accent: #fdc830;
+  --whee-highlight-accent-double: linear-gradient(to bottom, #3f4140, #fdc830);
+  --whee-highlight-flat: #3f4140;
+  --whee-highlight: linear-gradient(to bottom, #3f4140, #2b2c2c);
+  --whee-accent-text: rgb(255, 255, 255);
+  --whee-accent: rgb(42, 236, 178);
+
+  --whee-dashes: rgba(0, 0, 0, 0.5);
+  --whee-shade: rgba(0, 0, 0, 0.6);
+  --whee-gradient: linear-gradient(to bottom, #ffb347, #ffcc33);
+}

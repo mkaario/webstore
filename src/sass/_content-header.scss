@@ -1,0 +1,37 @@
+.content_header {
+  background-image: url("../img/bg_s.png");
+  background-size: cover;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 3em 2em;
+  position: relative;
+  align-items: center;
+  width: 100%;
+  .ingress {
+    background: var(--whee-shade);
+    box-shadow: 1px 2px 6px var(--whee-shade);
+    color: var(--whee-primary);
+    text-shadow: 0 1px #000;
+    padding: 6em 2em;
+    font-size: 0.8em;
+    line-height: 1.5;
+    border-bottom: 1px solid #fff;
+    border-right: 1px solid #fff;
+  }
+  .hanko {
+    background: rgba(255, 255, 255, 0.6);
+    position: absolute;
+    bottom: 48px;
+    right: 3em;
+    max-width: 70px;
+    padding: 0.5em;
+    border: 1px solid #fff;
+    box-shadow: 1px 1px 4px rgb(0 0 0 / 50%);
+    img {
+      width: 100%;
+      opacity: 0.7;
+    }
+  }
+}

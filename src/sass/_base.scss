@@ -1,0 +1,29 @@
+:root {
+  font-family: "Inter-Regular";
+  font-size: 16px;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+* {
+  margin: 0 0;
+  padding: 0 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  background: var(--whee-primary);
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+  .site_wrapper {
+    min-width: 320px;
+  }
+}

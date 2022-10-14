@@ -1,0 +1,45 @@
+.modal {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--whee-primary);
+  display: none;
+  justify-content: center;
+  height: 100vh;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  z-index: 20000;
+  .message {
+    background: var(--whee-text);
+    border: 1px solid var(--whee-highlight-flat);
+    color: var(--whee-primary);
+    font-size: 0.8em;
+    padding: 2em 2em;
+    position: relative;
+    width: 50%;
+    p {
+      border-left: 2px solid var(--whee-highlight-accent);
+      padding-left: 0.5em;
+    }
+    .close {
+      background: var(--whee-text);
+      border: 1px solid var(--whee-highlight-flat);
+      color: var(--whee-text);
+      font-size: 1em;
+      line-height: 0.8;
+      padding: 0.5em;
+      position: absolute;
+      right: -22px;
+      top: -1.2em;
+      img {
+        max-height: 16px;
+        max-width: 16px;
+        outline: none;
+      }
+    }
+  }
+  &.active {
+    display: flex;
+  }
+}

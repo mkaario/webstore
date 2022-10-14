@@ -1,0 +1,42 @@
+@media only screen and (min-width: 768px) {
+  /* Handling mobile to desktop changes all here, aiming for minimum changes */
+  main {
+    .store_wrapper {
+      flex-direction: row;
+      flex-wrap: wrap;
+      .store_item {
+        margin-block-end: 0;
+        width: 50%;
+        &:nth-child(odd) {
+          border-right: 1px dashed var(--whee-dashes);
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .site_wrapper {
+    max-width: 1000px;
+    header {
+      padding-block-end: 0;
+      .menu_btn {
+        display: none;
+      }
+      nav {
+        ul.main_navigation {
+          display: flex;
+          flex-direction: row;
+          max-height: 100vh;
+          width: 100%;
+          li.nav_element {
+            border-bottom: none;
+            border-right: 1px solid var(--whee-tertiary);
+            padding: 0.5em 2em;
+            width: auto;
+          }
+        }
+      }
+    }
+  }
+}

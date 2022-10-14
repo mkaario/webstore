@@ -1,0 +1,36 @@
+.menu_btn {
+  background: var(--whee-primary);
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  ul.main_navigation {
+    display: block;
+    height: auto;
+    list-style: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+    li.nav_element {
+      border-bottom: 1px solid var(--whee-tertiary);
+      display: block;
+      justify-content: left;
+      padding: 0.5em 0;
+      width: 100%;
+      span.navtext {
+        text-transform: uppercase;
+      }
+      &:last-child {
+        border-bottom: 1px solid var(--whee-primary);
+      }
+    }
+    &.active {
+      display: block;
+      height: auto;
+      max-height: 90vh;
+      transition: max-height 0.5s ease-in-out;
+    }
+  }
+}
