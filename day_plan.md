@@ -1,5 +1,0 @@
-- "takaisin" ylös button
-- intersection observer headeria ja ylläolevaa varten
-- hinta tagit paremmiksi
-- in stock -relaatio siihen mitä oikeasti lisätään ostoksiin
-- jos ostoskärry on tyhjä, näytä viesti
