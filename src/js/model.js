@@ -93,6 +93,16 @@ export const state = {
   ],
 };
 
+// Esimerkkitarkoitukseen pidetään state objekti kovakoodattuna ylle. Normaalisti tämä tulisi tietty tod. näk. jostain APIsta JSONina
+// ja silloin sen muodostaminen tulisi async fetcheista tyyliin:
+// const getJSON = async function(url) {
+//   const response = await fetch(url);
+//   const data = response.json();
+//   ...ja sitten määritellään state.store ko. palikaksi jos sille ei tarvitse tehdä lisämodifikaatioita
+// }¨
+// Tätä kutsutaan sitten tietty storeView.renderin ohessa tai suoraan initissä tapauksista riippuen
+
+// Muodostetaan karsittu objekti vietäväksi cart-arrayhin
 export function createCartObject(shapetype, storeindex) {
   return {
     name: shapetype,
@@ -101,6 +111,9 @@ export function createCartObject(shapetype, storeindex) {
   };
 }
 
+// Ottaa sisään currentActorin jonka idea on vain määritellä interaktio headerin kahden expanding osuuden (cart ja menu) välillä
+// että saadaan hide/show animaatio saumattomaksi - tai mikäli ei ole niistä kyse niin sitten vain sille voi passaa minkä tahansa elementin
+// jonka se togglaa activeksi
 export const toggleVisibility = function (currentActor) {
   const menuActor = document.querySelector(".main_navigation");
   const cartActor = document.querySelector(".shopping_cart");

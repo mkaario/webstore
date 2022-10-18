@@ -19,6 +19,7 @@ header {
       align-items: center;
       display: flex;
       img {
+        min-width: 48px; // Firefox oddity
         width: 100%;
       }
       .name {

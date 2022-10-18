@@ -5,16 +5,14 @@ import navigationView from "./views/navigationView.js";
 import cartView from "./views/cartView.js";
 import modalView from "./views/modalView.js";
 
+// Kontrolloi storeViewissä ja cartViewissä objektien lisäystä cart-arrayhin ja staten päivittämistä.
+// Ottaa sisään btn (debug-tarkoitukseen vain, voi tarkistaa event propagationia, voi poistaa tarpeettomana) ja stid (toimii item id:nä josta voidaan kaivaa indeksi storeen etc.), kts. storeView.js ja cartView.js jossa on ko. funktion listenerit
 const controlAddItem = function (btn, stid) {
-  console.log("calling controlAddItem");
-  console.log(btn, stid);
   const shapeType = stid;
 
-  console.log(model.state.store);
   const storeIndex = model.state.store.findIndex(
     (item) => item.name === shapeType
   );
-  console.log("i + type " + shapeType, storeIndex); // these work
   const cartObject = model.createCartObject(shapeType, storeIndex);
   if (model.state.store[storeIndex].quantity > 0) {
     if (model.state.cart.some((item) => item.name === shapeType)) {
@@ -37,13 +35,12 @@ const controlAddItem = function (btn, stid) {
 
   storeView.update(model.state.store);
   headerView.render(model.state.cart);
-  populateCart(model.state.cart);
-  console.log(model.state.store[storeIndex].quantity);
+
+  populateCart(model.state.cart); // Alempana on tehty funktiomuotoon populate sekä cartille että storelle mikäli haluaisi oikeammassa versiossa toteuttaa populaten aikana muitakin asioita. Tähän tarkoitukseen ylläolevat renderit toimivat kuitenkin mielestäni hyvin.
 };
 
+// Sama kuin yllä, mutta poistetaan itemeitä yksitellen.
 const controlRemoveItem = function (btn, stid) {
-  console.log("calling controlRemoveItem");
-  console.log(btn, stid);
   const shapeType = stid;
   for (const item of model.state.store) {
     if (item.name === shapeType && item.quantity < 1000) {
@@ -51,7 +48,6 @@ const controlRemoveItem = function (btn, stid) {
       break;
     }
   }
-  console.log(model.state.store);
   storeView.update(model.state.store);
   if (model.state.cart.some((item) => item.name === shapeType)) {
     const itemIndex = model.state.cart.findIndex(
@@ -68,10 +64,9 @@ const controlRemoveItem = function (btn, stid) {
   }
   headerView.render(model.state.cart);
   populateCart(model.state.cart);
-  // NTS, remove object if it is the last instance of the item which is removed
-  console.log(model.state.cart);
 };
 
+// Poistetaan kaikki instanssit itemistä cartista ja päivitetään state.store vastaamaan oikeaa tilannetta.
 const controlDeleteItem = function (stid) {
   const shapeType = stid;
   const itemIndex = model.state.cart.findIndex(
@@ -93,12 +88,10 @@ const controlDeleteItem = function (stid) {
 };
 
 const populateStore = function (data) {
-  console.log(data);
   storeView.render(data);
 };
 
 const populateCart = function (data) {
-  console.log("popCartfunc");
   cartView.render(data);
 };
 

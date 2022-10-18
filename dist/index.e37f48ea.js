@@ -797,9 +797,6 @@ var _baseViewJsDefault = parcelHelpers.interopDefault(_baseViewJs);
 class storeView extends (0, _baseViewJsDefault.default) {
     _parentElement = document.querySelector(".store_wrapper");
     _message = "";
-    // addHandlerSortingSearch(handler) {
-    //   const searchValue = document.querySelector(".search");
-    // }
     addHandlerAddItem(handler) {
         this._parentElement.addEventListener("click", function(e) {
             const shapeType = e.target.closest(".store_item");

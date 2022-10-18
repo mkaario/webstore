@@ -8,11 +8,8 @@ class cartView extends baseView {
     this._parentElement.addEventListener("click", function (e) {
       const shapeType = e.target.closest(".cart_item");
       const stid = shapeType?.dataset.type;
-      console.log(stid);
       const btn = e.target.closest(".add_item");
       if (!btn) return;
-      console.log(btn, stid);
-      console.log(e.target);
       handler(btn, stid);
     });
   }
@@ -24,7 +21,6 @@ class cartView extends baseView {
 
       const btn = e.target.closest(".remove_item");
       if (!btn) return;
-      console.log(btn, stid);
       handler(btn, stid);
     });
   }
@@ -36,7 +32,6 @@ class cartView extends baseView {
 
       const btn = e.target.closest(".delete_item");
       if (!btn) return;
-      console.log(btn, stid);
       handler(stid);
     });
   }
@@ -60,13 +55,9 @@ class cartView extends baseView {
   }
 
   _generateMarkup() {
-    console.log("generating cart");
-    console.log(this._data);
     const totalPrice = this._data.reduce((acc, item) => {
-      console.log(item.price);
       return acc + item.price * item.quantity;
     }, 0);
-    console.log(totalPrice);
     if (this._data.length === 0) {
       return `<div class="message">You have no items in your cart.</div>`;
     } else {

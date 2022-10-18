@@ -221,6 +221,7 @@ header .position_wrapper .logo {
 }
 
 header .position_wrapper .logo img {
+  min-width: 48px;
   width: 100%;
 }
 
