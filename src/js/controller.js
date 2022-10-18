@@ -7,6 +7,7 @@ import modalView from "./views/modalView.js";
 
 // Kontrolloi storeViewissä ja cartViewissä objektien lisäystä cart-arrayhin ja staten päivittämistä.
 // Ottaa sisään btn (debug-tarkoitukseen vain, voi tarkistaa event propagationia, voi poistaa tarpeettomana) ja stid (toimii item id:nä josta voidaan kaivaa indeksi storeen etc.), kts. storeView.js ja cartView.js jossa on ko. funktion listenerit
+// Note: shapeType muuttuja on siltä ajalta kun store myi vielä tehtävänannon mukaisia kolmioita, neliöitä ja ympyröitä :)
 const controlAddItem = function (btn, stid) {
   const shapeType = stid;
 

@@ -8,10 +8,8 @@ class storeView extends baseView {
     this._parentElement.addEventListener("click", function (e) {
       const shapeType = e.target.closest(".store_item");
       const stid = shapeType?.dataset.type;
-      console.log(stid);
       const btn = e.target.closest(".add_item");
       if (!btn) return;
-      console.log(e.target);
       handler(btn, stid);
     });
   }
@@ -23,7 +21,6 @@ class storeView extends baseView {
 
       const btn = e.target.closest(".remove_item");
       if (!btn) return;
-      console.log(e.target);
       handler(btn, stid);
     });
   }

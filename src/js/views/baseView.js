@@ -2,7 +2,6 @@ export default class baseView {
   _data;
 
   render(data, render = true) {
-    console.log(data);
     // if (!data || (Array.isArray(data) && data.length === 0))
     //   return this.renderError();
 
