@@ -29,66 +29,79 @@ body .site_wrapper {
 @font-face {
   font-family: SpaceGrotesk-Bold;
   src: url("SpaceGrotesk-Bold.ee517114.ttf");
+  font-display: swap;
 }
 
 @font-face {
   font-family: SpaceGrotesk-Light;
   src: url("SpaceGrotesk-Light.a82b6ac8.ttf");
+  font-display: swap;
 }
 
 @font-face {
   font-family: SpaceGrotesk-Medium;
   src: url("SpaceGrotesk-Medium.7de6e110.ttf");
+  font-display: swap;
 }
 
 @font-face {
   font-family: SpaceGrotesk-Regular;
   src: url("SpaceGrotesk-Regular.a8cb86e8.ttf");
+  font-display: swap;
 }
 
 @font-face {
   font-family: SpaceGrotesk-SemiBold;
   src: url("SpaceGrotesk-SemiBold.8f9286f3.ttf");
+  font-display: swap;
 }
 
 @font-face {
   font-family: Inter-Bold;
   src: url("Inter-Bold.995b3031.woff");
+  font-display: swap;
 }
 
 @font-face {
   font-family: Inter-ExtraBold;
   src: url("Inter-ExtraBold.ca08342c.woff");
+  font-display: swap;
 }
 
 @font-face {
   font-family: Inter-ExtraLight;
   src: url("Inter-ExtraLight.dce6f844.woff");
+  font-display: swap;
 }
 
 @font-face {
   font-family: Inter-Light;
   src: url("Inter-Light.35b2bd46.woff");
+  font-display: swap;
 }
 
 @font-face {
   font-family: Inter-Medium;
   src: url("Inter-Medium.388b7059.woff");
+  font-display: swap;
 }
 
 @font-face {
   font-family: Inter-Regular;
   src: url("Inter-Regular.52c5662f.woff");
+  font-display: swap;
 }
 
 @font-face {
   font-family: Inter-SemiBold;
   src: url("Inter-SemiBold.12e70e49.woff");
+  font-display: swap;
 }
 
 @font-face {
   font-family: Inter-Thin;
   src: url("Inter-Thin.04af86a0.woff");
+  font-display: swap;
 }
 
 :root {
@@ -332,10 +345,16 @@ main .store_wrapper .store_item .controls .in_cart {
   width: 100%;
   height: auto;
   max-height: 0;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   flex-direction: column;
   transition: max-height .5s ease-in-out;
   display: flex;
   overflow-y: scroll;
+}
+
+.shopping_cart::-webkit-scrollbar {
+  display: none;
 }
 
 .shopping_cart .message {

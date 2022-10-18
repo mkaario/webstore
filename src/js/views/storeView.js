@@ -4,6 +4,10 @@ class storeView extends baseView {
   _parentElement = document.querySelector(".store_wrapper");
   _message = "";
 
+  // addHandlerSortingSearch(handler) {
+  //   const searchValue = document.querySelector(".search");
+  // }
+
   addHandlerAddItem(handler) {
     this._parentElement.addEventListener("click", function (e) {
       const shapeType = e.target.closest(".store_item");
@@ -41,7 +45,9 @@ class storeView extends baseView {
                 <div class="price"><span class="amount">価格 ${
                   item.price
                 }€</span></div>  
-                <div class="item_image"><img src="${item.imageUrl}"/></div>
+                <div class="item_image"><img src="${
+                  item.imageUrl
+                }"/ alt="a photo of ${item.name}"></div>
                 </div>
                 <div class="details_block">
                 
@@ -50,7 +56,7 @@ class storeView extends baseView {
               </div>
             </div>
             <div class="controls">
-              <button class="add_item"><span class="text_wrapper">Add to cart</span></button>
+              <button class="add_item" aria-label="add this item to cart"><span class="text_wrapper">Add to cart</span></button>
               <div class="in_cart">In cart: ${
                 item.quantityOriginal - item.quantity
               }</div>
