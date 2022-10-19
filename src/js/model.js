@@ -114,21 +114,27 @@ export function createCartObject(shapetype, storeindex) {
 // Ottaa sisään currentActorin jonka idea on vain määritellä interaktio headerin kahden expanding osuuden (cart ja menu) välillä
 // että saadaan hide/show animaatio saumattomaksi - tai mikäli ei ole niistä kyse niin sitten vain sille voi passaa minkä tahansa elementin
 // jonka se togglaa activeksi
-export const toggleVisibility = function (currentActor) {
+export const toggleVisibility = function (currentActor, btn) {
   const menuActor = document.querySelector(".main_navigation");
+  const navElements = document.querySelectorAll(".nav_element");
   const cartActor = document.querySelector(".shopping_cart");
   const cartShader = document.querySelector(".content_shader");
+  console.log(currentActor);
   if (currentActor === menuActor) {
     cartActor.classList.remove("active");
     cartShader.classList.remove("active");
     currentActor.classList.toggle("active");
-    return;
+    if (!btn) return;
+    navElements.forEach((el) => el.classList.remove("active"));
+    btn.classList.add("active");
   }
   if (currentActor === cartActor) {
     menuActor.classList.remove("active");
     currentActor.classList.toggle("active");
     cartShader.classList.toggle("active");
     return;
+  }
+  if (currentActor === navActor) {
   }
   currentActor.classList.toggle("active");
 };

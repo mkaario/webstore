@@ -10,7 +10,7 @@ class cartView extends baseView {
       const stid = shapeType?.dataset.type;
       const btn = e.target.closest(".add_item");
       if (!btn) return;
-      handler(btn, stid);
+      handler(stid);
     });
   }
 
@@ -21,7 +21,7 @@ class cartView extends baseView {
 
       const btn = e.target.closest(".remove_item");
       if (!btn) return;
-      handler(btn, stid);
+      handler(stid);
     });
   }
 

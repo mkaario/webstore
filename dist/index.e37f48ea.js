@@ -534,6 +534,10 @@ function hmrAcceptRun(bundle, id) {
 },{}],"aenu9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _modelJs = require("./model.js");
+var _aboutViewJs = require("./views/aboutView.js");
+var _aboutViewJsDefault = parcelHelpers.interopDefault(_aboutViewJs);
+var _contactViewJs = require("./views/contactView.js");
+var _contactViewJsDefault = parcelHelpers.interopDefault(_contactViewJs);
 var _storeViewJs = require("./views/storeView.js");
 var _storeViewJsDefault = parcelHelpers.interopDefault(_storeViewJs);
 var _headerViewJs = require("./views/headerView.js");
@@ -544,13 +548,12 @@ var _cartViewJs = require("./views/cartView.js");
 var _cartViewJsDefault = parcelHelpers.interopDefault(_cartViewJs);
 var _modalViewJs = require("./views/modalView.js");
 var _modalViewJsDefault = parcelHelpers.interopDefault(_modalViewJs);
-const controlAddItem = function(btn, stid) {
-    console.log("calling controlAddItem");
-    console.log(btn, stid);
+// Kontrolloi storeViewissä ja cartViewissä objektien lisäystä cart-arrayhin ja staten päivittämistä.
+// Ottaa sisään stid:n (toimii item id:nä josta voidaan kaivaa indeksi storeen etc.), kts. storeView.js ja cartView.js jossa on ko. funktion listenerit
+// Note: shapeType muuttuja on siltä ajalta kun store myi vielä tehtävänannon mukaisia kolmioita, neliöitä ja ympyröitä :)
+const controlAddItem = function(stid) {
     const shapeType = stid;
-    console.log(_modelJs.state.store);
     const storeIndex = _modelJs.state.store.findIndex((item)=>item.name === shapeType);
-    console.log("i + type " + shapeType, storeIndex); // these work
     const cartObject = _modelJs.createCartObject(shapeType, storeIndex);
     if (_modelJs.state.store[storeIndex].quantity > 0) {
         if (_modelJs.state.cart.some((item)=>item.name === shapeType)) {
@@ -564,22 +567,18 @@ const controlAddItem = function(btn, stid) {
     }
     (0, _storeViewJsDefault.default).update(_modelJs.state.store);
     (0, _headerViewJsDefault.default).render(_modelJs.state.cart);
-    populateCart(_modelJs.state.cart);
-    console.log(_modelJs.state.store[storeIndex].quantity);
+    populateCart(_modelJs.state.cart); // Alempana on tehty funktiomuotoon populate sekä cartille että storelle mikäli haluaisi oikeammassa versiossa toteuttaa populaten aikana muitakin asioita. Tähän tarkoitukseen ylläolevat renderit toimivat kuitenkin mielestäni hyvin.
 };
-const controlRemoveItem = function(btn, stid) {
-    console.log("calling controlRemoveItem");
-    console.log(btn, stid);
+// Sama kuin yllä, mutta poistetaan itemeitä yksitellen.
+const controlRemoveItem = function(stid) {
     const shapeType = stid;
     for (const item of _modelJs.state.store)if (item.name === shapeType && item.quantity < 1000) {
         item.quantity++;
         break;
     }
-    console.log(_modelJs.state.store);
     (0, _storeViewJsDefault.default).update(_modelJs.state.store);
     if (_modelJs.state.cart.some((item)=>item.name === shapeType)) {
         const itemIndex = _modelJs.state.cart.findIndex((item)=>item.name === shapeType);
-        console.log(itemIndex);
         if (itemIndex > -1 && _modelJs.state.cart[itemIndex].quantity > 0) {
             _modelJs.state.cart[itemIndex].quantity--;
             if (_modelJs.state.cart[itemIndex].quantity === 0) _modelJs.state.cart = _modelJs.state.cart.filter((item)=>item.name !== shapeType);
@@ -587,9 +586,8 @@ const controlRemoveItem = function(btn, stid) {
     }
     (0, _headerViewJsDefault.default).render(_modelJs.state.cart);
     populateCart(_modelJs.state.cart);
-    // NTS, remove object if it is the last instance of the item which is removed
-    console.log(_modelJs.state.cart);
 };
+// Poistetaan kaikki instanssit itemistä cartista ja päivitetään state.store vastaamaan oikeaa tilannetta.
 const controlDeleteItem = function(stid) {
     const shapeType = stid;
     const itemIndex = _modelJs.state.cart.findIndex((item)=>item.name === shapeType);
@@ -604,11 +602,9 @@ const controlDeleteItem = function(stid) {
     (0, _headerViewJsDefault.default).render(_modelJs.state.cart);
 };
 const populateStore = function(data) {
-    console.log(data);
     (0, _storeViewJsDefault.default).render(data);
 };
 const populateCart = function(data) {
-    console.log("popCartfunc");
     (0, _cartViewJsDefault.default).render(data);
 };
 const controlVisibility = function(element) {
@@ -621,9 +617,27 @@ const controlModal = function(element) {
 const controlMainNavigation = function(element) {
     controlVisibility(element);
 };
+const controlRoutes = function(currentActor, route, btn) {
+    _modelJs.toggleVisibility(currentActor, btn);
+    switch(route){
+        case "about":
+            (0, _aboutViewJsDefault.default).render();
+            controlMainNavigation(currentActor);
+            break;
+        case "contact":
+            (0, _contactViewJsDefault.default).render();
+            controlMainNavigation(currentActor);
+            break;
+        case "store":
+            (0, _storeViewJsDefault.default).render(_modelJs.state.store);
+            controlMainNavigation(currentActor);
+            break;
+    }
+};
 const init = function() {
     (0, _headerViewJsDefault.default).addHandlerToggleCart(controlVisibility);
     (0, _navigationViewJsDefault.default).addHandlerToggleMenu(controlMainNavigation);
+    (0, _navigationViewJsDefault.default).addHandlerRouteView(controlRoutes);
     (0, _storeViewJsDefault.default).addHandlerAddItem(controlAddItem);
     (0, _storeViewJsDefault.default).addHandlerRemoveItem(controlRemoveItem);
     (0, _cartViewJsDefault.default).addHandlerAddItem(controlAddItem);
@@ -637,10 +651,19 @@ const init = function() {
 };
 init();
 
-},{"./model.js":"Y4A21","./views/storeView.js":"gJbkE","./views/cartView.js":"IaDwG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/headerView.js":"1wq1u","./views/modalView.js":"8QpnA","./views/navigationView.js":"it1BP"}],"Y4A21":[function(require,module,exports) {
+},{"./model.js":"Y4A21","./views/storeView.js":"gJbkE","./views/cartView.js":"IaDwG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/headerView.js":"1wq1u","./views/modalView.js":"8QpnA","./views/navigationView.js":"it1BP","./views/aboutView.js":"jVrhK","./views/contactView.js":"2i8hL"}],"Y4A21":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "state", ()=>state);
+// Esimerkkitarkoitukseen pidetään state objekti kovakoodattuna ylle. Normaalisti tämä tulisi tietty tod. näk. jostain APIsta JSONina
+// ja silloin sen muodostaminen tulisi async fetcheista tyyliin:
+// const getJSON = async function(url) {
+//   const response = await fetch(url);
+//   const data = response.json();
+//   ...ja sitten määritellään state.store ko. palikaksi jos sille ei tarvitse tehdä lisämodifikaatioita
+// }¨
+// Tätä kutsutaan sitten tietty storeView.renderin ohessa tai suoraan initissä tapauksista riippuen
+// Muodostetaan karsittu objekti vietäväksi cart-arrayhin
 parcelHelpers.export(exports, "createCartObject", ()=>createCartObject);
 parcelHelpers.export(exports, "toggleVisibility", ()=>toggleVisibility);
 const state = {
@@ -740,15 +763,19 @@ function createCartObject(shapetype, storeindex) {
         price: state.store[storeindex].price
     };
 }
-const toggleVisibility = function(currentActor) {
+const toggleVisibility = function(currentActor, btn) {
     const menuActor = document.querySelector(".main_navigation");
+    const navElements = document.querySelectorAll(".nav_element");
     const cartActor = document.querySelector(".shopping_cart");
     const cartShader = document.querySelector(".content_shader");
+    console.log(currentActor);
     if (currentActor === menuActor) {
         cartActor.classList.remove("active");
         cartShader.classList.remove("active");
         currentActor.classList.toggle("active");
-        return;
+        if (!btn) return;
+        navElements.forEach((el)=>el.classList.remove("active"));
+        btn.classList.add("active");
     }
     if (currentActor === cartActor) {
         menuActor.classList.remove("active");
@@ -801,11 +828,9 @@ class storeView extends (0, _baseViewJsDefault.default) {
         this._parentElement.addEventListener("click", function(e) {
             const shapeType = e.target.closest(".store_item");
             const stid = shapeType?.dataset.type;
-            console.log(stid);
             const btn = e.target.closest(".add_item");
             if (!btn) return;
-            console.log(e.target);
-            handler(btn, stid);
+            handler(stid);
         });
     }
     addHandlerRemoveItem(handler) {
@@ -814,32 +839,45 @@ class storeView extends (0, _baseViewJsDefault.default) {
             const stid = shapeType?.dataset.type;
             const btn = e.target.closest(".remove_item");
             if (!btn) return;
-            console.log(e.target);
-            handler(btn, stid);
+            handler(stid);
         });
     }
     _generateMarkup() {
-        return this._data.map((item)=>`
-        <div class="store_item" data-type="${item.name}">
-            
-            <h2 class="title">${item.name}s</h2>
-            <div class="item_info_block">
-              <div class="desc_block">  
-                <div class="price"><span class="amount">価格 ${item.price}€</span></div>  
-                <div class="item_image"><img src="${item.imageUrl}"/ alt="a photo of ${item.name}"></div>
-                </div>
-                <div class="details_block">
-                
-                <div class="description"><p>${item.description}</p></div>
-                <div class="quantity_available">In stock: ${item.quantity}</div>
-              </div>
-            </div>
-            <div class="controls">
-              <button class="add_item" aria-label="add this item to cart"><span class="text_wrapper">Add to cart</span></button>
-              <div class="in_cart">In cart: ${item.quantityOriginal - item.quantity}</div>
-            </div>
+        const headerMarkup = `
+      <section class="content_header">
+        <div class="ingress">
+          Kintsugi (金継ぎ, "golden joinery"), also known as kintsukuroi
+          (金繕い, "golden repair"), is the Japanese art of repairing broken
+          pottery by mending the areas of breakage with lacquer dusted or mixed
+          with powdered gold, silver, or platinum.
         </div>
-        `).join("");
+        <div class="hanko">
+          <img src="hanko_1.png" alt="" />
+        </div>
+      </section>
+    `;
+        const storeItemsMarkup = this._data.map((item)=>`
+      <div class="store_item" data-type="${item.name}">
+          
+          <h2 class="title">${item.name}s</h2>
+          <div class="item_info_block">
+            <div class="desc_block">  
+              <div class="price"><span class="amount">価格 ${item.price}€</span></div>  
+              <div class="item_image"><img src="${item.imageUrl}"/ alt="a photo of ${item.name}"></div>
+              </div>
+              <div class="details_block">
+              
+              <div class="description"><p>${item.description}</p></div>
+              <div class="quantity_available">In stock: ${item.quantity}</div>
+            </div>
+          </div>
+          <div class="controls">
+            <button class="add_item" aria-label="add this item to cart"><span class="text_wrapper">Add to cart</span></button>
+            <div class="in_cart">In cart: ${item.quantityOriginal - item.quantity}</div>
+          </div>
+      </div>
+      `).join("");
+        return headerMarkup.concat(storeItemsMarkup);
     }
 }
 exports.default = new storeView();
@@ -850,7 +888,6 @@ parcelHelpers.defineInteropFlag(exports);
 class baseView {
     _data;
     render(data, render = true) {
-        console.log(data);
         // if (!data || (Array.isArray(data) && data.length === 0))
         //   return this.renderError();
         // Alkuun hyvä idea mutta aiheuttaa lähinnä ongelmia, mm. laskiessa ostoskorin totaalia etc., siksi nyt toistaiseksi pois. NTS: palaa tähän myöhemmin.
@@ -868,11 +905,7 @@ class baseView {
         const curElements = Array.from(this._parentElement.querySelectorAll("*"));
         newElements.forEach((newEl, i)=>{
             const curEl = curElements[i];
-            // console.log(curEl, newEl.isEqualNode(curEl));
-            // Updates changed TEXT
-            if (!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== "") // console.log('💥', newEl.firstChild.nodeValue.trim());
-            curEl.textContent = newEl.textContent;
-            // Updates changed ATTRIBUTES
+            if (!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== "") curEl.textContent = newEl.textContent;
             if (!newEl.isEqualNode(curEl)) Array.from(newEl.attributes).forEach((attr)=>curEl.setAttribute(attr.name, attr.value));
         });
     }
@@ -894,12 +927,9 @@ class cartView extends (0, _baseViewJsDefault.default) {
         this._parentElement.addEventListener("click", function(e) {
             const shapeType = e.target.closest(".cart_item");
             const stid = shapeType?.dataset.type;
-            console.log(stid);
             const btn = e.target.closest(".add_item");
             if (!btn) return;
-            console.log(btn, stid);
-            console.log(e.target);
-            handler(btn, stid);
+            handler(stid);
         });
     }
     addHandlerRemoveItem(handler) {
@@ -908,8 +938,7 @@ class cartView extends (0, _baseViewJsDefault.default) {
             const stid = shapeType?.dataset.type;
             const btn = e.target.closest(".remove_item");
             if (!btn) return;
-            console.log(btn, stid);
-            handler(btn, stid);
+            handler(stid);
         });
     }
     addHandlerDeleteItem(handler) {
@@ -918,7 +947,6 @@ class cartView extends (0, _baseViewJsDefault.default) {
             const stid = shapeType?.dataset.type;
             const btn = e.target.closest(".delete_item");
             if (!btn) return;
-            console.log(btn, stid);
             handler(stid);
         });
     }
@@ -939,13 +967,9 @@ class cartView extends (0, _baseViewJsDefault.default) {
         });
     }
     _generateMarkup() {
-        console.log("generating cart");
-        console.log(this._data);
         const totalPrice = this._data.reduce((acc, item)=>{
-            console.log(item.price);
             return acc + item.price * item.quantity;
         }, 0);
-        console.log(totalPrice);
         if (this._data.length === 0) return `<div class="message">You have no items in your cart.</div>`;
         else return this._data.map((item)=>`
       <div class="cart_item" data-type="${item.name}">
@@ -984,17 +1008,14 @@ class headerView extends (0, _baseViewJsDefault.default) {
         this._parentElement.addEventListener("click", function(e) {
             const btn = e.target.closest(".shop_btn");
             if (!btn) return;
-            console.log("this is cart toggle handler called by controller");
             const currentActor = document.querySelector(".shopping_cart");
             handler(currentActor);
         });
     }
     _generateMarkup() {
-        console.log(this);
         const totalAmount = this._data.reduce((acc, item)=>{
             return acc + item.quantity;
         }, 0);
-        console.log(totalAmount);
         return `
    
       <img src="cart.png" /><span class="item_total">${totalAmount}</span>
@@ -1045,9 +1066,70 @@ class navigationView extends (0, _baseViewDefault.default) {
             handler(currentActor);
         });
     }
+    addHandlerRouteView(handler) {
+        this._parentElement.addEventListener("click", function(e) {
+            const btn = e.target.closest(".nav_element");
+            const currentActor = document.querySelector(".main_navigation");
+            const route = btn?.dataset.target;
+            if (!btn) return;
+            handler(currentActor, route, btn);
+        });
+    }
 }
 exports.default = new navigationView();
 
-},{"./baseView":"1AGkP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fA0o9","aenu9"], "aenu9", "parcelRequirea3b4")
+},{"./baseView":"1AGkP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jVrhK":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _baseViewJs = require("./baseView.js");
+var _baseViewJsDefault = parcelHelpers.interopDefault(_baseViewJs);
+class aboutView extends (0, _baseViewJsDefault.default) {
+    _parentElement = document.querySelector(".store_wrapper");
+    _generateMarkup() {
+        return `
+        <div class="about_view"">
+        
+        <section class="content_header">
+          <div class="ingress">
+            This would be the About-section.
+          </div>
+          <div class="hanko">
+            <img src="hanko_1.png" alt="" />
+          </div>
+        </section>
+                
+        </div>
+        `;
+    }
+}
+exports.default = new aboutView();
+
+},{"./baseView.js":"1AGkP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2i8hL":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _baseViewJs = require("./baseView.js");
+var _baseViewJsDefault = parcelHelpers.interopDefault(_baseViewJs);
+class contactView extends (0, _baseViewJsDefault.default) {
+    _parentElement = document.querySelector(".store_wrapper");
+    _generateMarkup() {
+        return `
+        <div class="contact_view"">
+        
+        <section class="content_header">
+          <div class="ingress">
+            This would be the Contact-section.
+          </div>
+          <div class="hanko">
+            <img src="hanko_1.png" alt="" />
+          </div>
+        </section>
+                 
+        </div>
+        `;
+    }
+}
+exports.default = new contactView();
+
+},{"./baseView.js":"1AGkP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fA0o9","aenu9"], "aenu9", "parcelRequirea3b4")
 
 //# sourceMappingURL=index.e37f48ea.js.map

@@ -25,5 +25,9 @@ body {
   justify-content: center;
   .site_wrapper {
     min-width: 320px;
+    .about_view,
+    .contact_view {
+      width: 100%;
+    }
   }
 }

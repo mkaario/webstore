@@ -1,4 +1,7 @@
 import * as model from "./model.js";
+
+import aboutView from "./views/aboutView.js";
+import contactView from "./views/contactView.js";
 import storeView from "./views/storeView.js";
 import headerView from "./views/headerView.js";
 import navigationView from "./views/navigationView.js";
@@ -6,9 +9,9 @@ import cartView from "./views/cartView.js";
 import modalView from "./views/modalView.js";
 
 // Kontrolloi storeViewissä ja cartViewissä objektien lisäystä cart-arrayhin ja staten päivittämistä.
-// Ottaa sisään btn (debug-tarkoitukseen vain, voi tarkistaa event propagationia, voi poistaa tarpeettomana) ja stid (toimii item id:nä josta voidaan kaivaa indeksi storeen etc.), kts. storeView.js ja cartView.js jossa on ko. funktion listenerit
+// Ottaa sisään stid:n (toimii item id:nä josta voidaan kaivaa indeksi storeen etc.), kts. storeView.js ja cartView.js jossa on ko. funktion listenerit
 // Note: shapeType muuttuja on siltä ajalta kun store myi vielä tehtävänannon mukaisia kolmioita, neliöitä ja ympyröitä :)
-const controlAddItem = function (btn, stid) {
+const controlAddItem = function (stid) {
   const shapeType = stid;
 
   const storeIndex = model.state.store.findIndex(
@@ -41,7 +44,7 @@ const controlAddItem = function (btn, stid) {
 };
 
 // Sama kuin yllä, mutta poistetaan itemeitä yksitellen.
-const controlRemoveItem = function (btn, stid) {
+const controlRemoveItem = function (stid) {
   const shapeType = stid;
   for (const item of model.state.store) {
     if (item.name === shapeType && item.quantity < 1000) {
@@ -54,7 +57,6 @@ const controlRemoveItem = function (btn, stid) {
     const itemIndex = model.state.cart.findIndex(
       (item) => item.name === shapeType
     );
-    console.log(itemIndex);
     if (itemIndex > -1 && model.state.cart[itemIndex].quantity > 0) {
       model.state.cart[itemIndex].quantity--;
       if (model.state.cart[itemIndex].quantity === 0)
@@ -109,9 +111,28 @@ const controlMainNavigation = function (element) {
   controlVisibility(element);
 };
 
+const controlRoutes = function (currentActor, route, btn) {
+  model.toggleVisibility(currentActor, btn);
+  switch (route) {
+    case "about":
+      aboutView.render();
+      controlMainNavigation(currentActor);
+      break;
+    case "contact":
+      contactView.render();
+      controlMainNavigation(currentActor);
+      break;
+    case "store":
+      storeView.render(model.state.store);
+      controlMainNavigation(currentActor);
+      break;
+  }
+};
+
 const init = function () {
   headerView.addHandlerToggleCart(controlVisibility);
   navigationView.addHandlerToggleMenu(controlMainNavigation);
+  navigationView.addHandlerRouteView(controlRoutes);
   storeView.addHandlerAddItem(controlAddItem);
   storeView.addHandlerRemoveItem(controlRemoveItem);
   cartView.addHandlerAddItem(controlAddItem);

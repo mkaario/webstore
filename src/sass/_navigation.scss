@@ -1,5 +1,6 @@
 .menu_btn {
   background: var(--whee-primary);
+  padding: 0.5em;
 }
 
 nav {
@@ -9,6 +10,7 @@ nav {
   ul.main_navigation {
     display: block;
     height: auto;
+    margin-top: 1em;
     list-style: none;
     max-height: 0;
     overflow: hidden;
@@ -19,11 +21,17 @@ nav {
       justify-content: left;
       padding: 0.5em 0;
       width: 100%;
+      z-index: 50000;
+      cursor: pointer;
       span.navtext {
         text-transform: uppercase;
       }
       &:last-child {
         border-bottom: 1px solid var(--whee-primary);
+      }
+      &.active .navtext {
+        border-left: 3px solid var(--whee-highlight-accent);
+        padding-left: 0.5em;
       }
     }
     &.active {

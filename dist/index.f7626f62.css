@@ -26,6 +26,10 @@ body .site_wrapper {
   min-width: 320px;
 }
 
+body .site_wrapper .about_view, body .site_wrapper .contact_view {
+  width: 100%;
+}
+
 @font-face {
   font-family: SpaceGrotesk-Bold;
   src: url("SpaceGrotesk-Bold.ee517114.ttf");
@@ -123,6 +127,7 @@ body .site_wrapper {
 button {
   background: var(--whee-primary);
   color: var(--whee-accent-text);
+  cursor: pointer;
   touch-action: manipulation;
   border-width: 0;
   outline: none;
@@ -233,6 +238,7 @@ header .position_wrapper .logo .name {
 
 .menu_btn {
   background: var(--whee-primary);
+  padding: .5em;
 }
 
 nav {
@@ -244,6 +250,7 @@ nav {
 nav ul.main_navigation {
   height: auto;
   max-height: 0;
+  margin-top: 1em;
   list-style: none;
   transition: max-height .5s ease-in-out;
   display: block;
@@ -253,6 +260,8 @@ nav ul.main_navigation {
 nav ul.main_navigation li.nav_element {
   border-bottom: 1px solid var(--whee-tertiary);
   width: 100%;
+  z-index: 50000;
+  cursor: pointer;
   justify-content: left;
   padding: .5em 0;
   display: block;
@@ -264,6 +273,11 @@ nav ul.main_navigation li.nav_element span.navtext {
 
 nav ul.main_navigation li.nav_element:last-child {
   border-bottom: 1px solid var(--whee-primary);
+}
+
+nav ul.main_navigation li.nav_element.active .navtext {
+  border-left: 3px solid var(--whee-highlight-accent);
+  padding-left: .5em;
 }
 
 nav ul.main_navigation.active {
@@ -548,6 +562,7 @@ main .store_wrapper .store_item .controls .in_cart {
   box-shadow: 1px 2px 6px var(--whee-shade);
   color: var(--whee-primary);
   text-shadow: 0 1px #000;
+  width: 100%;
   border-bottom: 1px solid #fff;
   border-right: 1px solid #fff;
   padding: 6em 2em;
@@ -572,16 +587,20 @@ main .store_wrapper .store_item .controls .in_cart {
 }
 
 @media only screen and (min-width: 768px) {
-  main .store_wrapper {
+  .site_wrapper {
+    width: 100%;
+  }
+
+  .site_wrapper main .store_wrapper {
     flex-flow: wrap;
   }
 
-  main .store_wrapper .store_item {
+  .site_wrapper main .store_wrapper .store_item {
     width: 50%;
     margin-block-end: 0;
   }
 
-  main .store_wrapper .store_item:nth-child(2n+1) {
+  .site_wrapper main .store_wrapper .store_item:nth-child(2n+1) {
     border-right: 1px dashed var(--whee-dashes);
   }
 }

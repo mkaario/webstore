@@ -9,8 +9,19 @@ class navigationView extends baseView {
       const currentActor = document.querySelector(".main_navigation");
 
       if (!btn) return;
-
       handler(currentActor);
+    });
+  }
+
+  addHandlerRouteView(handler) {
+    this._parentElement.addEventListener("click", function (e) {
+      const btn = e.target.closest(".nav_element");
+      const currentActor = document.querySelector(".main_navigation");
+      const route = btn?.dataset.target;
+
+      if (!btn) return;
+
+      handler(currentActor, route, btn);
     });
   }
 }

@@ -11,14 +11,15 @@
   width: 100%;
   .ingress {
     background: var(--whee-shade);
-    box-shadow: 1px 2px 6px var(--whee-shade);
-    color: var(--whee-primary);
-    text-shadow: 0 1px #000;
-    padding: 6em 2em;
-    font-size: 0.8em;
-    line-height: 1.5;
     border-bottom: 1px solid #fff;
     border-right: 1px solid #fff;
+    box-shadow: 1px 2px 6px var(--whee-shade);
+    color: var(--whee-primary);
+    font-size: 0.8em;
+    line-height: 1.5;
+    padding: 6em 2em;
+    text-shadow: 0 1px #000;
+    width: 100%;
   }
   .hanko {
     background: rgba(255, 255, 255, 0.6);
