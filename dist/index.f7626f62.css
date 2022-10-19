@@ -600,7 +600,7 @@ main .store_wrapper .store_item .controls .in_cart {
     margin-block-end: 0;
   }
 
-  .site_wrapper main .store_wrapper .store_item:nth-child(2n+1) {
+  .site_wrapper main .store_wrapper .store_item:nth-child(2n) {
     border-right: 1px dashed var(--whee-dashes);
   }
 }

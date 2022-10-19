@@ -9,7 +9,7 @@
         .store_item {
           margin-block-end: 0;
           width: 50%;
-          &:nth-child(odd) {
+          &:nth-child(even) {
             border-right: 1px dashed var(--whee-dashes);
           }
         }
