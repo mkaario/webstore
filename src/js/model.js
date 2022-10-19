@@ -119,7 +119,6 @@ export const toggleVisibility = function (currentActor, btn) {
   const navElements = document.querySelectorAll(".nav_element");
   const cartActor = document.querySelector(".shopping_cart");
   const cartShader = document.querySelector(".content_shader");
-  console.log(currentActor);
   if (currentActor === menuActor) {
     cartActor.classList.remove("active");
     cartShader.classList.remove("active");
@@ -133,8 +132,6 @@ export const toggleVisibility = function (currentActor, btn) {
     currentActor.classList.toggle("active");
     cartShader.classList.toggle("active");
     return;
-  }
-  if (currentActor === navActor) {
   }
   currentActor.classList.toggle("active");
 };

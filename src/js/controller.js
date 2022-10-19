@@ -81,7 +81,6 @@ const controlDeleteItem = function (stid) {
   model.state.store[itemStoreIndex].quantity =
     model.state.store[itemStoreIndex].quantity +
     model.state.cart[itemIndex].quantity;
-  console.log("delete " + shapeType, itemIndex);
   model.state.cart = model.state.cart.filter(function (item) {
     return item.name !== shapeType;
   });
